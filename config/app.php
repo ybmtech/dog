@@ -56,6 +56,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'paystack' => env('PAYSTACK_KEY', 'sk_test_f7d67101573ca9b12c876925edfd677acfbc623e'),
+
+
     'asset_url' => env('ASSET_URL'),
 
     /*

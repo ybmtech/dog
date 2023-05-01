@@ -60,6 +60,8 @@ $image->move($destinationPath,$image_name);
   $validated = $validate->validated();
   $validated['user_id']=$user_id;
   $validated['image']=$image_name;
+  $validated['last_breeding_date']=$request->dob;
+  $validated['last_visit_date']=$request->dob;
 
   $dog=Dog::create($validated);
 
@@ -113,7 +115,9 @@ $validated['image']=$image_name;
   
  unset($validated['user_id']) ;
  unset($validated['id']) ;
- 
+ $validated['last_breeding_date']=$request->dob;
+ $validated['last_visit_date']=$request->dob;
+
   $dog=Dog::where('id',$request->id)->update($validated);
 
   if($dog){

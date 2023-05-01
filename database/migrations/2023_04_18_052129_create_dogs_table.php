@@ -23,10 +23,13 @@ return new class extends Migration
             $table->longText('image');
             $table->string('price');
             $table->string('petid');
+            $table->bigInteger('quantity')->unsigned()->default(1);
             $table->enum('health_status',['yes','no'])->default('yes');
             $table->longText('healthy');
             $table->longText('medication');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+           $table->string('last_breeding_date');
+           $table->string('last_visit_date');
             $table->timestamps();
         });
     }

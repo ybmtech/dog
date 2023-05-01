@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\AwaitingBreedController;
+use App\Http\Controllers\BreedingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DogController;
@@ -45,11 +48,11 @@ Route::get('/contact', function () {
 
 Route::get('/store',[OrderController::class,'create'])->name('store');
 
-Route::post('/order-payment',[OrderController::class,'handlePaymentGateway'])->name('patient.order.payment');
 
  //paytack callback
  Route::get('/paystack-callback',[OrderController::class,'paystackCallback'])->name('paystack.callback');
-   
+ Route::get('/breeding-payment-verify',[BreedingController::class,'paystackCallback'])->name('reward.fee.payment.verify');
+
 Route::group(['prefix'=>'auth'],function(){
 
     Route::get('/login',[AuthenticatedSessionController::class,'create'])->name('login');
@@ -103,15 +106,30 @@ Route::group(['prefix'=>'admin','middleware'=>['role:admin']],function(){
 
     Route::delete('/delete-category',[CategoryController::class,'destroy'])->name('category.delete');
 
+    Route::get('/order-history',[AdminOrderController::class,'orderHistory'])->name('admin.order');
+    Route::get('/order-detail/{invoice_no}',[AdminOrderController::class,'orderItem'])->name('admin.order.item');
+    Route::delete('/cancel-order',[AdminOrderController::class,'orderCancel'])->name('admin.order.cancel');
+    Route::put('/order-fee',[AdminOrderController::class,'setFee'])->name('admin.order.fee');
+    Route::put('/order-status',[AdminOrderController::class,'orderStatus'])->name('admin.order.status');
+    Route::get('/payment-history',[AdminOrderController::class,'paymentHistory'])->name('admin.payment.history');
+  
 });
 
 Route::group(['prefix'=>'breeder','middleware'=>['role:breeder']],function(){
     Route::get('/dashboard',[DashboardController::class,'breederDashboard'])->name('breeder.dashboard');
-    Route::view('/guide','backend.breeder.guide')->name('guide'); 
+       Route::view('/guide','backend.breeder.guide')->name('guide'); 
+    Route::get('/orders',[AdminOrderController::class,'breederOrder'])->name('breeder.order');
+  
 });
 
 Route::group(['prefix'=>'client'],function(){
     Route::get('/dashboard',[DashboardController::class,'clientDashboard'])->name('client.dashboard');
+    Route::post('/save-order',[OrderController::class,'saveOrder'])->name('order.save');
+    Route::get('/order-items/{invoice_no}',[OrderController::class,'orderItem'])->name('order.items');
+    Route::delete('/cancel-order',[OrderController::class,'orderCancel'])->name('order.cancel');
+    Route::post('/order-payment',[OrderController::class,'handlePaymentGateway'])->name('order.payment');
+    Route::get('/order-history',[OrderController::class,'orderHistory'])->name('order.client.history');
+
 });
 
 Route::group(['prefix'=>'','middleware'=>['role:admin|breeder']],function(){
@@ -125,6 +143,17 @@ Route::group(['prefix'=>'','middleware'=>['role:admin|breeder']],function(){
     Route::put('/update-dog',[DogController::class,'edit'])->name('dog.edit');
 
     Route::delete('/delete-dog',[DogController::class,'destroy'])->name('dog.delete');
+
+    Route::put('/dog-visited',[DashboardController::class,'visitDoctor'])->name('dog.visited');
+    Route::put('/dog-breed-process',[AwaitingBreedController::class,'process'])->name('dog.breed.process');
+    Route::get('/breeding',[AwaitingBreedController::class,'create'])->name('breeding');
+    Route::post('/breeding',[BreedingController::class,'breed'])->name('breed');
+    Route::get('/breed-history',[BreedingController::class,'breedHistory'])->name('breed.history');
+    Route::put('/breed-action',[BreedingController::class,'breedAction'])->name('breed.action');
+    Route::put('/breed-reward-fulfil',[BreedingController::class,'rewardFulfil'])->name('reward.fulfil');
+    Route::put('/breed-reward-fee',[BreedingController::class,'setFee'])->name('reward.fee');
+    Route::get('/breeding-payment/{id}',[BreedingController::class,'handlePaymentGateway'])->name('reward.fee.payment');
+   
 
 });
 

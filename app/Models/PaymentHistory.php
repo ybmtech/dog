@@ -13,7 +13,11 @@ class PaymentHistory extends Model
         [
             'user_id',
             'reference_no',
-            'transaction_ref',
+            'type',
             'amount'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

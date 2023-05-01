@@ -5,17 +5,8 @@
 <div class="row">
     <div class="col-md-6 col-lg-3">
         <div class="statistic__item">
-            <h2 class="number">10,368</h2>
-            <span class="desc">members online</span>
-            <div class="icon">
-                <i class="zmdi zmdi-account-o"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="statistic__item">
-            <h2 class="number">388,688</h2>
-            <span class="desc">items sold</span>
+            <h2 class="number">{{ $order }}</h2>
+            <span class="desc">Order</span>
             <div class="icon">
                 <i class="zmdi zmdi-shopping-cart"></i>
             </div>
@@ -23,22 +14,14 @@
     </div>
     <div class="col-md-6 col-lg-3">
         <div class="statistic__item">
-            <h2 class="number">1,086</h2>
-            <span class="desc">this week</span>
-            <div class="icon">
-                <i class="zmdi zmdi-calendar-note"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="statistic__item">
-            <h2 class="number">$1,060,386</h2>
-            <span class="desc">total earnings</span>
+            <h2 class="number">{{ $paid_order }}</h2>
+            <span class="desc">Paid Order</span>
             <div class="icon">
                 <i class="zmdi zmdi-money"></i>
             </div>
         </div>
     </div>
+   
 </div>
 
   {{-- user data --}}
@@ -47,162 +30,37 @@
         <!-- USER DATA-->
         <div class="user-data m-b-40">
             <h3 class="title-3 m-b-30">
-                <i class="zmdi zmdi-account-calendar"></i>user data</h3>
+                <i class="zmdi zmdi-account-calendar"></i>Latest Orders</h3>
           
-            <div class="table-responsive table-data">
-                <table class="table">
+            <div class="table-responsive">
+                <table class="table table-borderless table-striped table-earning">
                     <thead>
                         <tr>
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
-                            <td>name</td>
-                            <td>role</td>
-                            <td>type</td>
-                            <td></td>
-                        </tr>
+                            <th>S/N</th>
+                            <th>Invoice No</th>
+                             <th>Total</th>
+                            <th>Status</th>
+                             <th>Payment Status</th>
+                             <th>Delivery Fee</th>
+                             <th>Date</th>
+                          </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="table-data__info">
-                                    <h6>lori lynch</h6>
-                                    <span>
-                                        <a href="#">johndoe@gmail.com</a>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="role admin">admin</span>
-                            </td>
-                            <td>
-                                <div class="rs-select2--trans rs-select2--sm">
-                                    <select class="js-select2" name="property">
-                                        <option selected="selected">Full Control</option>
-                                        <option value="">Post</option>
-                                        <option value="">Watch</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="more">
-                                    <i class="zmdi zmdi-more"></i>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox" checked="checked">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="table-data__info">
-                                    <h6>lori lynch</h6>
-                                    <span>
-                                        <a href="#">johndoe@gmail.com</a>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="role user">user</span>
-                            </td>
-                            <td>
-                                <div class="rs-select2--trans rs-select2--sm">
-                                    <select class="js-select2" name="property">
-                                        <option value="">Full Control</option>
-                                        <option value="" selected="selected">Post</option>
-                                        <option value="">Watch</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="more">
-                                    <i class="zmdi zmdi-more"></i>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="table-data__info">
-                                    <h6>lori lynch</h6>
-                                    <span>
-                                        <a href="#">johndoe@gmail.com</a>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="role user">user</span>
-                            </td>
-                            <td>
-                                <div class="rs-select2--trans rs-select2--sm">
-                                    <select class="js-select2" name="property">
-                                        <option value="">Full Control</option>
-                                        <option value="" selected="selected">Post</option>
-                                        <option value="">Watch</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="more">
-                                    <i class="zmdi zmdi-more"></i>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="au-checkbox">
-                                    <input type="checkbox">
-                                    <span class="au-checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="table-data__info">
-                                    <h6>lori lynch</h6>
-                                    <span>
-                                        <a href="#">johndoe@gmail.com</a>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="role member">member</span>
-                            </td>
-                            <td>
-                                <div class="rs-select2--trans rs-select2--sm">
-                                    <select class="js-select2" name="property">
-                                        <option selected="selected">Full Control</option>
-                                        <option value="">Post</option>
-                                        <option value="">Watch</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="more">
-                                    <i class="zmdi zmdi-more"></i>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
+                        @forelse ($orders as $order)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>#{{ $order->invoice_no }}</td>
+                        <td>₦{{ number_format($order->total,2) }}</td>
+                         <td>{{ $order->status }}</td>
+                         <td>{{ $order->payment_status }}</td>
+                          <td>{{ $order->delivery_fee=="0.00" ? "Not Yet Set" : '₦'.number_format($order->delivery_fee,2) }}</td>
+                         <td>{{ $order->created_at }}</td>
+                       
+                      </tr> 
+                    @empty
+                        
+                    @endforelse
+                     </tbody>
                 </table>
             </div>
            

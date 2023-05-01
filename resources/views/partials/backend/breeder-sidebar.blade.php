@@ -28,17 +28,22 @@
                 </li>
   
                 <li>
-                  <a href="table.html">
+                  <a href="{{ route('breeding') }}">
                       <i class="fas fa-table"></i>Breeding</a>
               </li>
+
+              <li>
+                <a href="{{ route('breed.history') }}">
+                    <i class="fas fa-chart-bar"></i>Breed History</a>
+            </li>
   
               <li>
-                  <a href="table.html">
+                  <a href="{{ route('guide') }}">
                       <i class="fas fa-table"></i>Guide</a>
               </li>
                
                 <li>
-                    <a href="calendar.html">
+                    <a href="{{ route('breeder.order') }}">
                         <i class="fas fa-shopping-cart"></i>Orders</a>
                 </li>
                
@@ -70,8 +75,13 @@
               </li>
 
               <li>
-                <a href="table.html">
+                <a href="{{ route('breeding') }}">
                     <i class="fas fa-table"></i>Breeding</a>
+            </li>
+
+            <li>
+                <a href="{{ route('breed.history') }}">
+                    <i class="fas fa-chart-bar"></i>Breed History</a>
             </li>
 
             <li>
@@ -80,7 +90,7 @@
             </li>
              
               <li>
-                  <a href="calendar.html">
+                  <a href="{{ route('breeder.order') }}">
                       <i class="fas fa-shopping-cart"></i>Orders</a>
               </li>
              

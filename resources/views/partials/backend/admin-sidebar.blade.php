@@ -27,15 +27,24 @@
                       <i class="fas fa-table"></i>Dogs</a>
               </li>
               <li>
-                  <a href="form.html">
+                  <a href="{{ route('users') }}">
                       <i class="far fa-user"></i>Users</a>
               </li>
               <li>
-                  <a href="calendar.html">
+                  <a href="{{ route('admin.order') }}">
                       <i class="fas fa-calendar-alt"></i>Orders</a>
               </li>
               <li>
-                  <a href="map.html">
+                <a href="{{ route('breeding') }}">
+                    <i class="fas fa-table"></i>Breeding</a>
+            </li>
+
+            <li>
+              <a href="{{ route('breed.history') }}">
+                  <i class="fas fa-chart-bar"></i>Breed History</a>
+          </li>
+              <li>
+                  <a href="{{ route('admin.payment.history') }}">
                       <i class="fas fa-map-marker-alt"></i>Payment History</a>
               </li>
              
@@ -73,11 +82,20 @@
                     <i class="far fa-user"></i>Users</a>
             </li>
             <li>
-                <a href="calendar.html">
+                <a href="{{ route('admin.order') }}">
                     <i class="fas fa-shopping-cart"></i>Orders</a>
             </li>
             <li>
-                <a href="map.html">
+                <a href="{{ route('breeding') }}">
+                    <i class="fas fa-table"></i>Breeding</a>
+            </li>
+
+            <li>
+              <a href="{{ route('breed.history') }}">
+                  <i class="fas fa-chart-bar"></i>Breed History</a>
+          </li>
+            <li>
+                <a href="{{ route('admin.payment.history') }}">
                     <i class="fas fa-credit-card"></i>Payment History</a>
             </li>
                   </ul>

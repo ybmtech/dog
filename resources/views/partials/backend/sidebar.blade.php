@@ -24,7 +24,7 @@
                 </li>
                
                 <li>
-                    <a href="calendar.html">
+                    <a href="{{ route('order.client.history') }}">
                         <i class="fas fa-shopping-cart"></i>Orders</a>
                 </li>
                
@@ -51,7 +51,7 @@
                 </li>
              
               <li>
-                  <a href="calendar.html">
+                  <a href="{{ route('order.client.history') }}">
                       <i class="fas fa-shopping-cart"></i>Orders</a>
               </li>
              

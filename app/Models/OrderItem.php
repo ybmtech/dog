@@ -17,6 +17,7 @@ class OrderItem extends Model
     protected $fillable = [
         'order_id',
         'dog_id',
+        'user_id',
         'quantity',
         'price',
     ];
@@ -28,4 +29,6 @@ class OrderItem extends Model
     public function dog(){
         return $this->belongsTo(Dog::class);
     }
+
+    
 }

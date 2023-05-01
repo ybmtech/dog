@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('reference_no');
             $table->string('amount');
+            $table->string('type');
             $table->timestamps();
         });
     }

@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payment_histories', function (Blueprint $table) {
+        Schema::create('awaiting_breeds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('reference_no');
-            $table->string('transaction_ref');
-            $table->string('amount');
+            $table->foreignId('dog_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('name');
+            $table->longText('image');
+            $table->string('gender');
+            $table->enum('breed',['yes','no'])->default('no');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_histories');
+        Schema::dropIfExists('awaiting_breeds');
     }
 };

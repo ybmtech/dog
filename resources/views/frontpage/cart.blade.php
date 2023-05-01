@@ -14,7 +14,6 @@
                          <th>Name</th>
                         <th>Quantity</th>
                          <th>Price</th>
-                         <th>Subtotal</th>
                       <th>Action</th>
                       </tr>
                 </thead>
@@ -26,7 +25,7 @@
                <td>{{ $cart->name }}</td>  
               <td>{{ $cart->quantity }}</td>  
               <td>₦{{ number_format($cart->price,2) }}</td>  
-              <td>₦{{ number_format($cart->price * $cart->quantity,2) }}</td>  
+               
                   <td>
                 	<form action="{{ route('cart.remove') }}" method="POST">
                         @csrf
@@ -48,8 +47,13 @@
               @endif
                 </tbody>
             </table>
-            <form action="{{ route('add.cart') }}" method="post">
-                @csrf
+            <form action="{{ route('order.save') }}" method="post">
+              @csrf
+              <textarea class="form-control" name="address" id="address" placeholder="Delivery Address"></textarea>
+              @error('address')
+              <span class="text-danger">{{ $message }}</span>
+          @enderror
+              <br><br>
                 <input type="hidden" name="dog_id" value="">
                 <button type="submit" class="btn btn-primary btn-block p-3" style="border-radius: 0;">Checkout</button>
  

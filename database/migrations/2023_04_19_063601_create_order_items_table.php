@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('dog_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('quantity');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->bigInteger('quantity')->unsigned()->default(1);
             $table->string('price');
             $table->timestamps();
         });

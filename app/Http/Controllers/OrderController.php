@@ -6,6 +6,7 @@ use App\Models\Dog;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentHistory;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -15,14 +16,46 @@ class OrderController extends Controller
 
     public function __construct()
     {
-      $this->middleware(['auth','role:client'])->only(['']);
+      $this->middleware(['auth','role:client'])->only(['saveOrder','handlePaymentGateway','orderHistory','orderCancel','orderItem']);
      }
     
     public function create(){
-       $dogs=Dog::where('health_status','yes')->latest()->get();
+       $dogs=Dog::where('health_status','yes')->where('quantity','1')->latest()->get();
         return view('frontpage.store',compact('dogs'));
     }
 
+    public function orderHistory(){
+      $orders=Order::where('user_id',auth()->user()->id)->latest()->get();
+       return view('backend.client.orders',compact('orders'));
+   }
+
+   public function orderItem($invoice_no){
+    $orders=Order::where('invoice_no',$invoice_no)->first();
+     return view('backend.client.order-details',compact('orders'));
+ }
+
+   public function orderCancel(Request $request){
+    $validate=Validator::make($request->all(),[
+      'id' => ['required'],
+     ], 
+);
+
+if($validate->fails()){
+  toast($validate->errors()->first(),'info');
+return back()->withErrors($validate)->withInput();
+}
+    $orders=Order::findOrFail($request->id);
+    $order_items=$orders->order_items;
+    foreach($order_items as $item){
+      Dog::where('id',$item->dog_id)->update([
+        'quantity'=>1
+      ]);
+    }
+    $orders->status="cancelled";
+    $orders->save();
+    toast('Order Cancelled','success');
+    return redirect()->route('order.client.history');
+ }
 
     public function buy($id){
         $id=substr($id,10);
@@ -62,12 +95,12 @@ class OrderController extends Controller
       }
 
       public function saveOrder(Request $request){
+       
         $validate=Validator::make($request->all(),[
             'address' => ['required','string'],
-            'prescription' => ['required'],
            ], 
     );
-    
+
     if($validate->fails()){
         toast($validate->errors()->first(),'info');
       return back()->withErrors($validate)->withInput();
@@ -90,50 +123,51 @@ class OrderController extends Controller
             'invoice_no'=>$invoice_no,
             'user_id'=>auth()->user()->id,
             'total'=>$total,
-            'payment_status'=>'paid',
+            'payment_status'=>'not paid',
             'delivery_address'=>$request->address,
         ]
     );
     
     
     foreach($carts as $cart){
+      $dog=Dog::find($cart->id);
         OrderItem::create(
             [
                 'order_id'=>$order->id,
                 'dog_id'=>$cart->id,
+                'user_id'=>$dog->user_id,
                 'quantity'=>$cart->quantity,
                 'price'=>$cart->price
             ]
         );
-        $dog=Dog::find($cart->id);
+        
         $dog->quantity=$dog->quantity - $cart->quantity;
         $dog->save();
     }
     
     \Cart::clear();
-    toast('Order Sent','success');
-    return back();
+    toast('Order Saved','success');
+    return redirect()->route('order.client.history');
      }
 
       public function handlePaymentGateway(Request $request){
-
         $validate=Validator::make($request->all(),[
-          'invoice_no'=>'required',
-        ]
-      );
-      
-      if($validate->fails()){
-        toast($validate->errors()->first(),'info');
-        return back()->withErrors($validate)->withInput();
-      }
-
-      $order=Order::where('invoice_no',$request->invoice_no)->first();
+          'invoice_no' => ['required'],
+         ], 
+    );
+    
+    if($validate->fails()){
+      toast($validate->errors()->first(),'info');
+    return back()->withErrors($validate)->withInput();
+    }
+      $order=Order::where('invoice_no',$request->invoice_no)->firstOrFail();
       $email=auth()->user()->email;
       $id=auth()->user()->id;
       $amount_with_fee=$order['delivery_fee'] + $order['total'];
       $amount=$amount_with_fee * 100;
       $reference=time().random_int(9,9999);
       $redirect=url('paystack-callback');
+      
        $url = "https://api.paystack.co/transaction/initialize";
         $token=config('app.paystack');
       
@@ -201,8 +235,8 @@ class OrderController extends Controller
       [
         'user_id'=>$user_id,
         'reference_no'=> $reference_id,
-        'transaction_ref'=>$invoice_no,
-        'amount'=> $amount,
+        'type'=>'order',
+        'amount'=> $amount/100,
     ]
     );
     toast('Payment was successful','success');

@@ -23,6 +23,8 @@ class Dog extends Model
         'healthy',
         'medication',
         'user_id',
+        'last_breeding_date',
+        'last_visit_date',
     ];
 
 
